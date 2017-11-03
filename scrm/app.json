@@ -1,12 +1,15 @@
 {
   "pages":[
+    "pages/admin/screening/screening",
+    "pages/admin/admin",
     "pages/index/index",
     "pages/logs/logs"
+    
   ],
   "window":{
     "backgroundTextStyle":"light",
-    "navigationBarBackgroundColor": "#fff",
-    "navigationBarTitleText": "WeChat",
-    "navigationBarTextStyle":"black"
+    "navigationBarBackgroundColor": "black",
+    "navigationBarTitleText": "scrm",
+    "navigationBarTextStyle":"#fff"
   }
 }

@@ -50,5 +50,10 @@ Page({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
     })
+  },
+  baidu: function(){
+    wx.navigateTo({
+      url: '../../https://www.baidu.com',
+    })
   }
 })

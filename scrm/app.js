@@ -35,5 +35,43 @@ App({
   },
   globalData: {
     userInfo: null
+  },
+  getActivityData:function(index,url,cb){//获取活动数据;
+  // url:路径;index:参数;cb:function
+    wx.request({
+      url: url,
+      data: {"dateOption": index},
+      header: { 'Context-Type': 'application/json' },
+      method: 'GET',
+      dataType: 'json',
+      success: function (res) {
+        cb(res);
+      },
+      fail: function (res) { },
+      complete: function (res) { },
+    })
+  },
+  getOpid:function(url){//获取opid;url:路径
+    wx.login({
+      success: function (res) {
+        if (res.code) {
+          //发起网络请求
+          wx.request({
+            url: url,//登录页面
+            data: {
+              appid: 'wx45ef8259718bb31d',//小程序ID
+              secret: 'd312036d93900f1130788d7d24f5a47e',//小程序密钥
+              js_code: res.code,//登录时获取的 code
+              grant_type: 'authorization_code'//固定写法
+            },
+            success: function (rows) {
+              wx.setStorageSync("opid",rows.data.openid);
+            }
+          })
+        } else {
+          console.log('获取用户登录态失败！' + res.errMsg)
+        }
+      }
+    });
   }
 })
