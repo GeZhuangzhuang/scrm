@@ -36,28 +36,37 @@ App({
   globalData: {
     userInfo: null
   },
-  getActivityData:function(index,url,cb){//获取活动数据;
+  getRequest:function(data,url,cb){//获取活动数据;
   // url:路径;index:参数;cb:function
+    wx.showLoading({
+      title: '正在加载',
+      mask: true,
+    })
     wx.request({
-      url: url,
-      data: {"dateOption": index},
+      url: 'http://10.0.18.13:8080/scrm/'+url,
+      data: data,
       header: { 'Context-Type': 'application/json' },
       method: 'GET',
       dataType: 'json',
       success: function (res) {
         cb(res);
       },
-      fail: function (res) { },
-      complete: function (res) { },
+      fail: function (res) {
+        wx.showToast({
+          title: '加载失败',
+          image: ''
+        })
+      },
+      complete: function (res) {wx.hideLoading() },
     })
   },
-  getOpid:function(url){//获取opid;url:路径
+  getOpid:function(){//获取opid;url:路径
     wx.login({
       success: function (res) {
         if (res.code) {
           //发起网络请求
           wx.request({
-            url: url,//登录页面
+            url: "https://api.weixin.qq.com/sns/jscode2session",//登录页面
             data: {
               appid: 'wx45ef8259718bb31d',//小程序ID
               secret: 'd312036d93900f1130788d7d24f5a47e',//小程序密钥

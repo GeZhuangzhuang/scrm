@@ -1,10 +1,15 @@
 {
   "pages":[
-    "pages/admin/screening/screening",
-    "pages/admin/admin",
     "pages/index/index",
+    "pages/error/error",
+    "pages/admin/admin",
+    "pages/historicalEvents/historicalEvents",
+    "pages/historicalEvents/studentdetail/studentdetail",
+    "pages/historicalEvents/studentlist/studentlist",
+    "pages/activities/activities",
+    "pages/main/main",
+    "pages/activate/activate",
     "pages/logs/logs"
-    
   ],
   "window":{
     "backgroundTextStyle":"light",

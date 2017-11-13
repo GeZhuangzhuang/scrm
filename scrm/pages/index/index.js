@@ -1,13 +1,40 @@
 //index.js
 //获取应用实例
 const app = getApp()
-
+app.getOpid();
 Page({
   data: {
-    motto: 'Hello World',
+    motto: '学校crm',
     userInfo: {},
     hasUserInfo: false,
     canIUse: wx.canIUse('button.open-type.getUserInfo')
+  },
+  scrm:function(){
+    const opid = wx.getStorageSync("opid");
+    console.log(opid);
+    const data = {'opid':opid};
+    const url = 'wx/login';
+    app.getRequest(data,url,function(res){
+      console.log(res.data.rows)
+      if (res.data.rows == null){
+        wx.redirectTo({
+          url: '../activate/activate'
+        })
+      }else{
+        if (res.data.rows.opid == ''){
+          wx.showModal({
+            title: '提示',
+            content: '请检查当前网络!并重新登录'
+          })
+        }else{
+          wx.removeStorageSync('opid');
+          wx.setStorageSync('user', res.data.rows)
+          wx.redirectTo({
+            url: '../main/main'
+          })
+        }
+      }      
+    })
   },
   //事件处理函数
   bindViewTap: function() {
@@ -49,11 +76,6 @@ Page({
     this.setData({
       userInfo: e.detail.userInfo,
       hasUserInfo: true
-    })
-  },
-  baidu: function(){
-    wx.navigateTo({
-      url: '../../https://www.baidu.com',
     })
   }
 })

@@ -1,8 +1,7 @@
-/* pages/admin/admin.wxss */
-@import './screening/screening.wxss';
-@import './attence/attence.wxss';
-@import './qrcode/qrcode.wxss';
-@import './codeImage/codeImage.wxss';
+/* pages/historicalEvents/historicalEvents.wxss */
+@import '../admin/qrcode/qrcode.wxss';
+@import '../activities/share/share.wxss';
+@import '../activities/particulars/particulars.wxss';
 /*页面  */
 page{
   height: 100%;
@@ -11,7 +10,16 @@ page{
   margin: 0;
   background: #f2f2f2;
 }
-
+.timeIndex{
+  height: 100%;
+  width: 100%;
+  padding: 0;
+  margin: 0;
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 999;
+}
 /*头  */
 .head{
   background: #1358B5;
@@ -19,21 +27,31 @@ page{
   height: 22%;
   border-radius: 100% / 30%;
 }
+
 .head_view{
   height: 43px;
   width:100%;
   background: #004B97;
-  display: flex;
   align-items: center;
   color: #ffffff;
-  font-size: 17px;
+  display: flex;
 }
 .head_view_view{
-  width:80%;
+  width:90%;
   margin: 0 auto;
+  height: 23px;
+  font-size: 17px;
 }
-.head_view_view_text2{
+.head_view_view_left{
+  float: left;
+  opacity: 0.7;
+}
+.head_view_view_center{
+  margin: 0 0 0 calc((100% - 16px * 9) / 2);
+}
+.head_view_view_right{
   float: right;
+  opacity: 0.7;
 }
 
 /*滑动区  */
@@ -81,14 +99,13 @@ page{
   -webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
   -webkit-line-clamp: 2; /** 显示的行数 **/
 }
-/*拍照  */
 .slippage_pictures_view{
   display: flex;
   align-items: center;
   width:94%;
   height: 20%;
   margin: 0 auto;
-  border-bottom: 1px solid #cccccc;
+  /* border-bottom: 1px solid #cccccc; */
 }
 .slippage_pictures_img{
   width: 20px;
@@ -96,12 +113,14 @@ page{
   margin: 0 0 0 7px;
 }
 .slippage_pictures_view_text{
-  padding: 0 0 0 74%;
-  font-size: 15px;
-  color: #289cea;
-  width: 33px;
+  color: #ff6600;
+  width: 100%;
+  border-bottom: 1px solid #ccc;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 16px;
 }
-/*各种按钮  */
 .slippage_pictures_buttom{
   display: flex;
   align-items: center;
