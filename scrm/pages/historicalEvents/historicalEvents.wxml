@@ -22,7 +22,7 @@
       <!-- 循环区 -->
       <view wx:if="{{activity.length-1 > index}}" wx:for="{{activity}}" class='slippage_view_view'>
           <!-- 图片数据 -->
-        <view bindtap='studentlist' id='{{item.id}}' data-price="{{item.price}}"  style='width:100%;height:60%;display: flex;align-items:flex-end;'>
+        <view bindtap='studentlist' id='{{item.id}}' data-price="{{item.price*(activity.length-1)}}"  style='width:100%;height:60%;display: flex;align-items:flex-end;'>
           <!-- 图片 -->
           <view class='slippage_parallel_view1'>
             <image src='{{item.img}}' style='width:100%;height:100%'></image>
@@ -37,7 +37,7 @@
         <!-- 拍照 -->
         <view class='slippage_pictures_view'>
           <view class='slippage_pictures_view_text'>
-            <text>￥{{item.price*item.suma}}元</text>
+            <text>￥{{item.price*(activity.length-1)}}元</text>
             <text>{{item.price}}元/人</text>
           </view>
         </view>

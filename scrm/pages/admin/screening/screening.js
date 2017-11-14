@@ -94,6 +94,9 @@ module.exports.screeningStatus = screeningStatus;
  * 加载数据
  */
 function activityData(code,url){
+  if (code.that != null) {
+    that = code.that
+  }
   app.getRequest(code, url, function (res) {
     var activity = res.data.rows;
     console.log(activity)

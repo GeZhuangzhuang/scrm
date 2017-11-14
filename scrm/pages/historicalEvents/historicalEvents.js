@@ -4,8 +4,6 @@ let app = getApp();
 var utils = require("../../utils/util.js");
 // 引入screening.js方法
 let screening = require("../admin/screening/screening.js");
-// 引入二维码js
-var QR = require("../../utils/qrcode.js");
 // 引入qrcode.js方法
 let qrcode = require("../admin/qrcode/qrcode.js");
 // 引入share.js方法
@@ -72,7 +70,7 @@ Page({
     this.setData({
       date: date1
     })
-    this.activitylist(1, 1000, date1, this);
+    this.activitylist(1, 1000, date1,this);
     let that = this;
     setTimeout(function () {
       that.setData({
@@ -147,9 +145,34 @@ Page({
   },
   activitylist : function(num,size,date,that){
     const user = wx.getStorageSync('user');
-    const code = { "num": num, "size": size, "date": date, "id": user.id, "name": user.name, "opid": user.opid, "status": user.status, "tel": user.tel, "checksum": user.checksum };
+    const code = { "num": num, "size": size, "date": date, "id": user.id, "name": user.name, "opid": user.opid, "status": user.status, "tel": user.tel};
     const url = 'wx/slectActivitylist';
-    screening.activityData(code, url);
+    app.getRequest(code, url,function (res){
+      let activity = res.data.rows;
+      console.log(activity)
+      let priceSum = 0;
+      if (activity != null) {
+        for (var i = 0; i < activity.length; i++) {
+          if (activity[i].start == null) {
+            activity[i].start = '';
+          } else {
+            activity[i].end = utils.formatTime(new Date(activity[i].end));
+          }
+          if (activity[i].end == null) {
+            activity[i].end = '';
+          } else {
+            activity[i].start = utils.formatTime(new Date(activity[i].start));
+          }
+          if (activity.length-1>i){
+            priceSum += activity[i].price * (activity.length - 1);
+          }
+        }
+        activity[activity.length - 1].pricesums = priceSum;
+        that.setData({
+          activity: activity
+        })
+      }
+    })
   },
 
   /**

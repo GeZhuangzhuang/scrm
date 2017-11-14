@@ -37,7 +37,7 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    const code = { 'dateOption': 1 }
+    const code = { 'dateOption': 1 ,'that':this}
     const url = 'activity/getAllActivity';
     screening.activityData(code, url);
   },
