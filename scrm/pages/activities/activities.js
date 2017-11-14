@@ -25,7 +25,7 @@ Page({
    */
   onLoad: function (options) {
     const that = this;
-    const code = {'that':this};
+    const code = {'that':this,"uid":wx.getStorageSync("user").id};
     const url = 'activity/getListActivity';
     screening.activityData(code,url);
     const opid = wx.getStorageSync("opid");

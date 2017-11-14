@@ -29,8 +29,14 @@ Page({
       const data = { 'tel': tel};
       app.getRequest(data,url,function(res){
         console.log(res.data.rows);
+        if (res.data.rows=='0'){
+          wx.redirectTo({
+            url: '../error/error',
+          })
+        }
         that.setData({
-          validation: res.data.rows
+          validation: res.data.rows,
+          tel:tel
         })
       })
     }
@@ -39,9 +45,16 @@ Page({
   submit : function (e){
     console.log(e.target.dataset);
     const tel = e.target.dataset.tel;
-    const code = e.target.dataset.code;
+    const thatTel = this.data.tel;
+    let code = e.target.dataset.code;
     const validation = this.data.validation;
     // console.log(this.data.validation)
+    if(tel!=thatTel){
+      wx.showModal({
+        title: '提示',
+        content: '手机号有误，重新获取验证码！',
+      })
+    }
     if (tel == '' || code == '' || validation == null){
       wx.showModal({
         title: '提示',
@@ -61,7 +74,21 @@ Page({
           content: '手机号有误',
         })
       } else {
-        
+        code = {
+          "tel":tel,
+          "validation": validation,
+          "opid":wx.getStorageSync("opid")
+        }
+        const url = "wx/activate";
+        app.getRequest(code,url,function(res){
+          console.log(res)
+          if (res.data.rows!=null){
+            wx.setStorageSync("user", res.data.rows)
+            wx.redirectTo({
+              url: '../main/main',
+            })
+          }
+        })
       }
     }
   },
