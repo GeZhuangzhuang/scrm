@@ -10,6 +10,7 @@ let qrcode = require("../admin/qrcode/qrcode.js");
 let share = require("../activities/share/share.js");
 // 引入particulars.js
 let particulars = require("../activities/particulars/particulars.js");
+let size = 20;
 Page({
   // 上个月
   upper : function(){
@@ -18,7 +19,7 @@ Page({
     let month = parseInt(date.substring(date.indexOf('年') + 1, date.indexOf('月')));
     const date1 = getPreMonth(year, month);
     console.log(date1)
-    this.activitylist(1, 1000, date1, this);
+    this.activitylist(1, date1, this);
     this.setData({
       date: date1,
     })
@@ -33,7 +34,7 @@ Page({
       date: date1
     })
     console.log(date1)
-    this.activitylist(1, 1000, date1, this);
+    this.activitylist(1, date1, this);
   },
   // 下个月
   lower : function(){
@@ -43,7 +44,7 @@ Page({
     let month = parseInt(date.substring(date.indexOf('年') + 1, date.indexOf('月')));
     const date1 = getNextMonth(year, month); 
     console.log(date1)
-    this.activitylist(1, 1000, date1, this);
+    this.activitylist(1,date1, this);
     this.setData({
       date: date1
     })
@@ -63,6 +64,10 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
+    this.setData({
+      num: 1,
+      size: size
+    });
     const date = new Date();
     const year = date.getFullYear()
     const month = date.getMonth() + 1;
@@ -70,7 +75,7 @@ Page({
     this.setData({
       date: date1
     })
-    this.activitylist(1, 1000, date1,this);
+    this.activitylist(1,date1,this);
     let that = this;
     setTimeout(function () {
       that.setData({
@@ -143,7 +148,7 @@ Page({
       url: './studentlist/studentlist?price=' + e.currentTarget.dataset.price + "&aid=" + e.currentTarget.id
     })
   },
-  activitylist : function(num,size,date,that){
+  activitylist : function(num,date,that){
     const user = wx.getStorageSync('user');
     const code = { "num": num, "size": size, "date": date, "id": user.id, "name": user.name, "opid": user.opid, "status": user.status, "tel": user.tel};
     const url = 'wx/slectActivitylist';
@@ -188,6 +193,18 @@ Page({
    */
   qrcodeStatus: qrcode.qrcodeStatus,
   createQrCode: qrcode.createQrCode,
+  /**
+   * 下拉
+   */
+  upper: function () {
+    this.activitylist(1, this.data.date,this)
+  },
+  /**
+   * 上拉
+   */
+  lower: function () {
+    this.activitylist(++this.data.num, this.data.date, this)
+  }
 })
 //上个月
 function getPreMonth(year, month) {

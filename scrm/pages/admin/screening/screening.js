@@ -1,6 +1,8 @@
 let that = null;
 let utils = require("../../../utils/util.js");
 let app = getApp();
+//保存数据
+let data = [];
 /**
    * 状态
    */
@@ -97,8 +99,11 @@ function activityData(code,url){
   if (code.that != null) {
     that = code.that
   }
+  if (that.data.num == 1) {
+    data = []
+  }
   app.getRequest(code, url, function (res) {
-    var activity = res.data.rows;
+    let activity = res.data.rows;
     console.log(activity)
     if (activity != null) {
       for (var i = 0; i < activity.length; i++) {
@@ -112,12 +117,20 @@ function activityData(code,url){
         }else{
           activity[i].start = utils.formatTime(new Date(activity[i].start));
         }
+        data.push(activity[i])
       }
     }
     that.setData({
-      activity: activity
+      activity: data
       ,screeningStatus: 0
     })
+    if (activity.length == 0) {
+      wx.showModal({
+        title: '提示',
+        content: '已经到底了',
+      })
+    }
   });
+  
 }
 module.exports.activityData = activityData;

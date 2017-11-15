@@ -6,6 +6,7 @@ let attence = require("./attence/attence.js");
 let qrcode = require("./qrcode/qrcode.js");
 // 引入qrcode.js方法
 let codeImage = require("./codeImage/codeImage.js");
+let size = 20;
 Page({
   /**
    * 页面的初始数据
@@ -37,7 +38,16 @@ Page({
    * 生命周期函数--监听页面加载
    */
   onLoad: function (options) {
-    const code = { 'dateOption': 1 ,'that':this}
+    this.setData({
+      num: 1,
+      size: size
+    });
+    const code = {
+      'dateOption': 1 ,
+      'that':this,
+      'num': 1,
+      'size': size
+    }
     const url = 'activity/getAllActivity';
     screening.activityData(code, url);
   },
@@ -123,4 +133,58 @@ Page({
   imageRemove : codeImage.imageRemove,
   imageUploadFile: codeImage.imageUploadFile,
   imagePreview: codeImage.imagePreview,
+  /**
+   * 下拉
+   */
+  upper: function () {
+    this.setData({
+      num: 1,
+      size: size
+    });
+    const code = {
+      "uid": wx.getStorageSync("user").id,
+      'num': 1,
+      'size': size
+    };
+    const url = 'activity/getAllActivity';
+    screening.activityData(code, url);
+  },
+  /**
+   * 上拉
+   */
+  lower: function () {
+    const code = {
+      "uid": wx.getStorageSync("user").id,
+      'num': ++this.data.num,
+      'size': size
+    };
+    const url = 'activity/getAllActivity';
+    screening.activityData(code, url);
+  },
+  /**
+   * 下拉
+   */
+  attupper: function() {
+    this.setData({
+      attnum: 1,
+      size: size
+    });
+    const code = {
+      'num': 1,
+      'size': size,
+      "status": this.data.status
+    };
+    attence.attenceData(this.data.aid, code);
+  },
+  /**
+   * 上拉
+   */
+  attlower: function () {
+    const code = {
+      'num': ++this.data.attnum,
+      'size': size,
+      "status": this.data.status
+    };
+    attence.attenceData(this.data.aid,code);
+  }
 })

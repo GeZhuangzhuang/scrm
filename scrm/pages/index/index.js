@@ -1,7 +1,6 @@
 //index.js
 //获取应用实例
 const app = getApp()
-app.getOpid();
 Page({
   data: {
     motto: '学校crm',

@@ -4,6 +4,6 @@
   <template is="particulars"></template>
   <!-- 关闭 -->
   <view bindtap='particularsStatus' class='particulars_colse'>
-    <template is="fork"></template>
+    <template is="fork1"></template>
   </view>
 </view>

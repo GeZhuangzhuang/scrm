@@ -22,7 +22,9 @@
     <text class='attence_medium_right'>考勤状况</text>
   </view>
   <!-- 滑动 -->
-  <scroll-view scroll-y="true" class='attence_scroll'>
+  <scroll-view upper-threshold="6%"
+  lower-threshold="6%"
+  bindscrolltoupper="attupper" bindscrolltolower="attlower" scroll-y="true" class='attence_scroll'>
     <view class='attence_scroll_view' wx:for="{{attenceData}}">
       <text class='attence_scroll_left'>{{item.name}}</text>
       <text class='attence_scroll_right' style='color:#ffd11a'>{{item.signend == null ? '缺勤' : '全勤'}}</text>

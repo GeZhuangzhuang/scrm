@@ -11,7 +11,9 @@
 </view>
 <!-- 滑动区域 -->
 <view class='slippage'>
-  <scroll-view scroll-y="true" class='slippage_view'>
+  <scroll-view upper-threshold="6%"
+  lower-threshold="6%"
+  bindscrolltoupper="upper" bindscrolltolower="lower" scroll-y="true" class='slippage_view'>
     <block wx:if="{{activity.length == 0}}">
       <view>没有活动</view>
     </block>

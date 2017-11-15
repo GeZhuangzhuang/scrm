@@ -93,8 +93,8 @@ Page({
   
   },
   commit : function(){
-    wx.navigateTo({
-      url: '../s',
+    wx.redirectTo({
+      url: '../studentlist/studentlist',
     })
   }
 })

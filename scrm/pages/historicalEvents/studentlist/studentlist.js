@@ -104,16 +104,18 @@ Page({
 function getUserList(that,e,aid){
   const url = "wx/userList";
   const user = wx.getStorageSync('user');
-  const code = { "aid": aid, "id": user.id, "name": user.name, "opid": user.opid, "status": user.status, "tel": user.tel, "checksum": user.checksum };
+  const code = { "aid": aid, "id": user.id, "name": user.name, "opid": user.opid, "status": user.status, "tel": user.tel};
   app.getRequest(code, url, function (res){
     const data = res.data.rows;
     const agent = data[data.length - 1].agentActivity;
     let map = [];
     let index = 0;
-    for (let i = 0; i < data.length-1;i++){
-      map.push(data[i])
-      if (data[i].signUp.status == '已全勤'){
-        index++
+    if (data.length != null && data.length != 0){
+      for (let i = 0; i < data.length - 1; i++) {
+        map.push(data[i])
+        if (data[i].signUp.status == '已全勤') {
+          index++
+        }
       }
     }
     agent.sdate = utils.formatTime(new Date(agent.sdate));
