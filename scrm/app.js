@@ -16,7 +16,7 @@ App({
             url: "https://api.weixin.qq.com/sns/jscode2session",//登录页面
             data: {
               appid: 'wx45ef8259718bb31d',//小程序ID
-              secret: '64c0c92383fd6497bf914cc42c794b94',//小程序密钥
+              secret: '47ddf015fee0e456ba010c26b31f79c8',//小程序密钥
               js_code: res.code,//登录时获取的 code
               grant_type: 'authorization_code'//固定写法
             },
